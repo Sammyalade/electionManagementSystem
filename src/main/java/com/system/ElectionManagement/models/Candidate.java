@@ -1,4 +1,4 @@
-package com.system.ElectionManagement.models;
+package com.electionManagementSystem.models;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
