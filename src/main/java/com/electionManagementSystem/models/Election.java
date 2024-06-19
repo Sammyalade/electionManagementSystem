@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Entity
@@ -27,4 +28,11 @@ public class Election {
     private ElectionCategory electionCategory;
     @OneToOne
     private ElectionResult electionResult;
+    @ManyToMany
+    @JoinTable(
+            name = "voter_election",
+            joinColumns = @JoinColumn(name = "election_id"),
+            inverseJoinColumns = @JoinColumn(name = "voter_id")
+    )
+    private Set<Voter> voters;
 }
