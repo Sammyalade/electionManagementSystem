@@ -11,7 +11,7 @@ import lombok.Data;
 public class ContactInformation {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private String phoneNumber;
     private String email;
     @OneToOne

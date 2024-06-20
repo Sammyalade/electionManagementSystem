@@ -12,7 +12,7 @@ import lombok.Data;
 public class ElectionResult {
     @Id
     @GeneratedValue
-    private long Id;
+    private Long Id;
     private Long totalNumberOfVoteCasted;
 
 }

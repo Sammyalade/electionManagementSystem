@@ -11,7 +11,7 @@ import lombok.Data;
 public class SystemAdministrator {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private String firstName;
     private String lastName;
     private AdminPrivilege adminPrivilege;

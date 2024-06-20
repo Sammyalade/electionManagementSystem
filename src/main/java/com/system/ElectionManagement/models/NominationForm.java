@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class NominationForm {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private NominationStatus status;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)

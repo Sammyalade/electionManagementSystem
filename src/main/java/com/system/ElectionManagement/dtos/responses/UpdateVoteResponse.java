@@ -1,25 +1,18 @@
-package com.system.ElectionManagement.models;
+package com.system.ElectionManagement.dtos.responses;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Data
-@Entity
-public class Vote {
-    @Id
-    @GeneratedValue
-    private Long id;
-    @OneToOne
-    private Voter voter;
-    @ManyToOne
-    private Candidate candidate;
-    private ElectionCategory election;
+@Setter
+@Getter
+public class UpdateVoteResponse {
+    private Long voteId;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDateTime timeVoted;
