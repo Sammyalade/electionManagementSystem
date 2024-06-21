@@ -1,6 +1,5 @@
 package com.system.ElectionManagement.repositories;
 
-import com.system.ElectionManagement.models.NominationForm;
 import com.system.ElectionManagement.models.SystemAdministrator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

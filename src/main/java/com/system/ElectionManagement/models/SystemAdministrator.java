@@ -6,11 +6,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
 
+import static jakarta.persistence.GenerationType.IDENTITY;
+
 @Data
 @Entity
 public class SystemAdministrator {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
