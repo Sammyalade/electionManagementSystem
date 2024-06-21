@@ -1,12 +1,12 @@
 package com.system.ElectionManagement.services;
 
 import com.system.ElectionManagement.dtos.requests.AddVoteRequest;
+import com.system.ElectionManagement.dtos.requests.GetAllVoteRequest;
 import com.system.ElectionManagement.dtos.requests.GetVoteRequest;
 import com.system.ElectionManagement.dtos.responses.AddVoteResponse;
 import com.system.ElectionManagement.dtos.responses.VoteResponse;
 import com.system.ElectionManagement.exceptions.VoterNotFoundException;
 import com.system.ElectionManagement.models.Vote;
-import com.system.ElectionManagement.models.Voter;
 import com.system.ElectionManagement.repositories.VoteRepository;
 import com.system.ElectionManagement.repositories.VoterRepository;
 import lombok.AllArgsConstructor;
@@ -26,8 +26,8 @@ public class VoteServices implements VoteServiceImpl {
     private final VoterRepository voterRepository;
 
     @Override
-    public List<VoteResponse> getAllVote() {
-        List<Vote> votes = voteRepository.findAll();
+    public List<VoteResponse> getAllVote(GetAllVoteRequest voteRequest) {
+        List<Vote> votes = voteRepository.findVotesByCategory(voteRequest.getElectionCategory());
         if (votes.isEmpty()) {
             throw new VoterNotFoundException("No votes found");
         }

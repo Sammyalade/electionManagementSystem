@@ -1,6 +1,7 @@
 package com.system.ElectionManagement.services;
 
 import com.system.ElectionManagement.dtos.requests.AddVoteRequest;
+import com.system.ElectionManagement.dtos.requests.GetAllVoteRequest;
 import com.system.ElectionManagement.dtos.requests.GetVoteRequest;
 import com.system.ElectionManagement.dtos.responses.VoteResponse;
 import com.system.ElectionManagement.models.Vote;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 import static com.system.ElectionManagement.models.ElectionCategory.NATIONAL;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class VoteServicesTest {
@@ -36,7 +38,9 @@ class VoteServicesTest {
     }
     @Test
     public void testToGetAllVote(){
-        List<VoteResponse> votes = voteService.getAllVote();
+        GetAllVoteRequest getAllVoteRequest = new GetAllVoteRequest();
+        getAllVoteRequest.setElectionCategory(NATIONAL);
+        List<VoteResponse> votes = voteService.getAllVote(getAllVoteRequest);
         assertThat(votes).hasSize(1);
     }
 }
