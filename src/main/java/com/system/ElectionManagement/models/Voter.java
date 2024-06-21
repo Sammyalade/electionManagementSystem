@@ -11,6 +11,8 @@ import java.time.LocalDate;
 
 import static jakarta.persistence.EnumType.STRING;
 
+import static jakarta.persistence.EnumType.STRING;
+
 @Data
 @Entity
 public class Voter {
