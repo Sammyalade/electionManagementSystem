@@ -24,9 +24,6 @@ public class Vote {
     private Voter voter;
     @ManyToOne
     private Candidate candidate;
-    @ManyToOne
-    private Election election;
-    @Setter(AccessLevel.NONE)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDateTime timeVoted;

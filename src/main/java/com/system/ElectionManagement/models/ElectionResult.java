@@ -20,22 +20,6 @@ public class ElectionResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    private Election election;
-
-    @Enumerated(value = STRING)
-    private ElectionCategory electionCategory;
-    @Enumerated(value = STRING)
-    private ElectionStatus electionStatus;
-
-    @OneToOne
-    private Candidate candidate;
-    private Long numberOfVotesReceived;
-
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDate electionDate;
-    private Long totalNumberOfVotesCasted;
 }
 
 

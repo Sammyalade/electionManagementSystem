@@ -9,37 +9,40 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Set;
 
+import static jakarta.persistence.EnumType.STRING;
+
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Election {
     @Id
     @GeneratedValue
-    private long id;
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    private LocalDate startDate;
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    private LocalDate endDate;
-    @JsonSerialize(using= LocalTimeSerializer.class)
-    @JsonDeserialize(using = LocalTimeDeserializer.class)
-    private LocalTime startTime;
-    @JsonSerialize(using= LocalTimeSerializer.class)
-    @JsonDeserialize(using = LocalTimeDeserializer.class)
-    private LocalTime endTime;
+    private Long id;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime startTime;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime endTime;
+    @Enumerated(STRING)
     private ElectionStatus electionStatus;
+    @Enumerated(STRING)
     private ElectionCategory electionCategory;
     @OneToOne
     private ElectionResult electionResult;
+    private String electionTitle;
     @OneToMany
-    @JoinTable(name = "registered_voters" ,
+    @JoinTable(
+            name = "registered_candidates",
             joinColumns = @JoinColumn(name = "election_id"),
             inverseJoinColumns = @JoinColumn(name = "candidate_id")
     )
