@@ -16,6 +16,7 @@ public class Election {
     @Id
     @GeneratedValue
     private long id;
+    private String electionTitle;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime startTime;
@@ -26,11 +27,10 @@ public class Election {
     private ElectionCategory electionCategory;
     @OneToOne
     private ElectionResult electionResult;
-    @ManyToMany
-    @JoinTable(
-            name = "voter_election",
+    @OneToMany
+    @JoinTable(name = "registered_voters" ,
             joinColumns = @JoinColumn(name = "election_id"),
-            inverseJoinColumns = @JoinColumn(name = "voter_id")
+            inverseJoinColumns = @JoinColumn(name = "candidate_id")
     )
-    private Set<Voter> voters;
+    private Set<Candidate> candidates;
 }

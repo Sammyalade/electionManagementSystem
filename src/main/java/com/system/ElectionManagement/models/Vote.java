@@ -9,12 +9,14 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+import static jakarta.persistence.GenerationType.IDENTITY;
+
 @Data
 @Entity
 public class Vote {
     @Id
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = IDENTITY)
+    private Long id;
     @OneToOne
     private Voter voter;
     @ManyToOne
