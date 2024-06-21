@@ -1,5 +1,6 @@
 package com.system.ElectionManagement.dtos.requests;
 
+import com.system.ElectionManagement.models.Candidate;
 import com.system.ElectionManagement.models.ElectionCategory;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,4 +10,5 @@ import lombok.Setter;
 public class AddVoteRequest {
     private Long id;
     private ElectionCategory election;
+    private Long candidateId;
 }
