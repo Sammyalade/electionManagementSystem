@@ -13,6 +13,6 @@ public class Address {
     private int id;
     private String streetName;
     private String city;
-    private int zipCode;
-    private Long postalCode;
+    private String zipCode;
+    private String postalCode;
 }
