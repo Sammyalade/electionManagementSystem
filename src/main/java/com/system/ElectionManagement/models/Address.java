@@ -14,5 +14,5 @@ public class Address {
     private String streetName;
     private String city;
     private String zipCode;
-    private String postalCode;
+    private Long postalCode;
 }
