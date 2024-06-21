@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RegisterToVoteResponse {
+public class SignUpResponse {
     private Long id;
     private String message;
 }

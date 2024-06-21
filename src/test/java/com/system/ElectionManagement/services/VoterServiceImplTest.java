@@ -21,22 +21,22 @@ class VoterServiceImplTest {
 
     @Test
    public void testThatAVoterCanRegister() {
-        RegisterToVoteRequest request = new RegisterToVoteRequest();
+        SignUpRequest request = new SignUpRequest();
         request.setFirstName("John");
         request.setLastName("Doe");
         request.setUsername("Joe");
         request.setPassword("password");
         request.setDateOfBirth(LocalDateTime.now());
         request.setEligibilityStatus(EligibilityStatus.ELIGIBLE);
-        RegisterToVoteResponse response = voterService.register(request);
+        SignUpResponse response = voterService.signUp(request);
         assertNotNull(response);
         assertTrue(response.getMessage().contains("success"));
     }
 
     @Test
     public void testThatTwoVotersCanRegister() {
-        RegisterToVoteRequest request = new RegisterToVoteRequest();
-        RegisterToVoteRequest request1 = new RegisterToVoteRequest();
+        SignUpRequest request = new SignUpRequest();
+        SignUpRequest request1 = new SignUpRequest();
         request.setFirstName("John");
         request.setLastName("Doe");
         request.setUsername("Joe");
@@ -52,8 +52,8 @@ class VoterServiceImplTest {
         request1.setEligibilityStatus(EligibilityStatus.NOT_ELIGIBLE);
 
 
-        RegisterToVoteResponse response = voterService.register(request);
-        RegisterToVoteResponse response1 = voterService.register(request1);
+        SignUpResponse response = voterService.signUp(request);
+        SignUpResponse response1 = voterService.signUp(request1);
         assertNotNull(response);
         assertTrue(response.getMessage().contains("success"));
         assertNotNull(response1);
@@ -62,7 +62,7 @@ class VoterServiceImplTest {
 
     @Test
     public void testThatVoterCanLogIn() {
-        RegisterToVoteRequest request = new RegisterToVoteRequest();
+        SignUpRequest request = new SignUpRequest();
         request.setFirstName("John");
         request.setLastName("Doe");
         request.setUsername("John-bull");
@@ -70,7 +70,7 @@ class VoterServiceImplTest {
         request.setPassword("password");
         request.setDateOfBirth(LocalDateTime.now());
         request.setEligibilityStatus(EligibilityStatus.ELIGIBLE);
-        voterService.register(request);
+        voterService.signUp(request);
 
         LogInRequest logInRequest = new LogInRequest();
         logInRequest.setUsername("John-bull");
@@ -98,14 +98,14 @@ class VoterServiceImplTest {
 
     @Test
    public void testThatVoterCanUpdateTheirInformation() {
-        RegisterToVoteRequest request = new RegisterToVoteRequest();
+        SignUpRequest request = new SignUpRequest();
         request.setFirstName("John");
         request.setLastName("Doe");
         request.setUsername("John-bull");
         request.setPassword("password");
         request.setDateOfBirth(LocalDateTime.now());
         request.setEligibilityStatus(EligibilityStatus.ELIGIBLE);
-        var voter =voterService.register(request);
+        var voter =voterService.signUp(request);
 
         UpdateInformationRequest updateVoterInfoRequest = new UpdateInformationRequest();
         updateVoterInfoRequest.setId(voter.getId());
@@ -123,14 +123,14 @@ class VoterServiceImplTest {
 
     @Test
     public void testThatAVoterCanLogOut(){
-        RegisterToVoteRequest request = new RegisterToVoteRequest();
+        SignUpRequest request = new SignUpRequest();
         request.setFirstName("John");
         request.setLastName("Doe");
         request.setUsername("John-bull");
         request.setId(300L);
         request.setDateOfBirth(LocalDateTime.now());
         request.setEligibilityStatus(EligibilityStatus.ELIGIBLE);
-        voterService.register(request);
+        voterService.signUp(request);
 
         LogInRequest logInRequest = new LogInRequest();
         logInRequest.setUsername("John-bull");
@@ -145,5 +145,25 @@ class VoterServiceImplTest {
         assertNotNull(logOutResponse);
 
 
+    }
+
+    @Test
+    public void testThatAVoterCanViewTheirInformation(){
+        SignUpRequest request = new SignUpRequest();
+        request.setFirstName("John");
+        request.setLastName("Doe");
+        request.setUsername("John-bull");
+        request.setPassword("password");
+        request.setDateOfBirth(LocalDateTime.now());
+        request.setEligibilityStatus(EligibilityStatus.ELIGIBLE);
+       var voter = voterService.signUp(request);
+
+        ViewVoterInformationRequest viewInformationRequest = new ViewVoterInformationRequest();
+        viewInformationRequest.setId(voter.getId());
+
+        ViewVoterInformationResponse viewInformationResponse = voterService.viewVoterInformation(viewInformationRequest);
+
+        assertNotNull(viewInformationResponse);
+        assertTrue(viewInformationResponse.getMessage().contains("success"));
     }
 }

@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 
-public class RegisterToVoteRequest {
+public class SignUpRequest {
     @Id
     @GeneratedValue
     private Long id;

@@ -31,10 +31,10 @@ public class VoterServiceImpl implements VoterService{
         this.candidateRepository = candidateRepository;
     }
     @Override
-    public RegisterToVoteResponse register(RegisterToVoteRequest registerToVoteRequest) {
-        Voter voter = modelMapper.map(registerToVoteRequest, Voter.class);
+    public SignUpResponse signUp(SignUpRequest signUpRequest) {
+        Voter voter = modelMapper.map(signUpRequest, Voter.class);
         voterRepository.save(voter);
-        var response = modelMapper.map(voter, RegisterToVoteResponse.class);
+        var response = modelMapper.map(voter, SignUpResponse.class);
         response.setMessage("Voter successfully signed up");
 
         return response;
@@ -92,6 +92,18 @@ public class VoterServiceImpl implements VoterService{
             logOutResponse.setMessage("This voter does not exist");
         }
         return logOutResponse;
+    }
+
+    @Override
+    public ViewVoterInformationResponse viewVoterInformation(ViewVoterInformationRequest viewVoterInformationRequest) {
+        Voter voter = voterRepository.findVoterById(viewVoterInformationRequest.getId());
+        if(voter == null) throw new RuntimeException("This voter does not exist");
+        modelMapper.map(viewVoterInformationRequest, voter);
+        voterRepository.save(voter);
+        ViewVoterInformationResponse viewVoterInformationResponse = modelMapper.map(viewVoterInformationRequest,  ViewVoterInformationResponse.class);
+        viewVoterInformationResponse.setMessage("successfully viewed successfully");
+        viewVoterInformationResponse.setTimeOfResponse(LocalDateTime.now());
+        return viewVoterInformationResponse;
     }
 
     public Voter findVoter(Long id) {
