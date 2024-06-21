@@ -10,6 +10,8 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import static jakarta.persistence.EnumType.STRING;
+
 @Data
 @Entity
 public class Election {
@@ -22,7 +24,9 @@ public class Election {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime endTime;
+    @Enumerated(value = STRING)
     private ElectionStatus electionStatus;
+    @Enumerated(value = STRING)
     private ElectionCategory electionCategory;
     @OneToOne
     private ElectionResult electionResult;
