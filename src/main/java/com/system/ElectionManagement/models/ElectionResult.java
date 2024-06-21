@@ -15,4 +15,5 @@ public class ElectionResult {
     private long Id;
     private Long totalNumberOfVoteCasted;
 
+
 }

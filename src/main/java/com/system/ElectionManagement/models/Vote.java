@@ -14,13 +14,11 @@ import java.time.LocalDateTime;
 public class Vote {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     @OneToOne
     private Voter voter;
     @ManyToOne
     private Candidate candidate;
-    @ManyToOne
-    private Election election;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDateTime timeVoted;

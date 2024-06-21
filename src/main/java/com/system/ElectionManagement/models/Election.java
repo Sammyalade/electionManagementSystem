@@ -5,32 +5,40 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import static jakarta.persistence.EnumType.STRING;
+
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Election {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime startTime;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime endTime;
+    @Enumerated(STRING)
     private ElectionStatus electionStatus;
+    @Enumerated(STRING)
     private ElectionCategory electionCategory;
     @OneToOne
     private ElectionResult electionResult;
-    @ManyToMany
+    private String electionTitle;
+    @OneToMany
     @JoinTable(
-            name = "voter_election",
+            name = "registered_candidates",
             joinColumns = @JoinColumn(name = "election_id"),
-            inverseJoinColumns = @JoinColumn(name = "voter_id")
+            inverseJoinColumns = @JoinColumn(name = "candidate_id")
     )
-    private Set<Voter> voters;
+    private Set<Candidate> candidates;
 }

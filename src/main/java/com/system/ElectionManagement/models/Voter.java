@@ -2,13 +2,11 @@ package com.system.ElectionManagement.models;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.time.LocalDateTime;
-import java.util.Set;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -18,12 +16,12 @@ public class Voter {
     private int id;
     private String firstName;
     private String lastName;
+    private String username;
     @OneToOne
     private ContactInformation contactInformation;
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime dateOfBirth;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate dateOfBirth;
+    @Enumerated(EnumType.STRING)
     private EligibilityStatus eligibilityStatus;
-    @ManyToMany(mappedBy = "voters")
-    private Set<Election> elections;
 }
