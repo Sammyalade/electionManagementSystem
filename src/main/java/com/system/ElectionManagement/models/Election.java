@@ -33,9 +33,9 @@ public class Election {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime endTime;
-    @Enumerated(STRING)
+    @Enumerated(value = STRING)
     private ElectionStatus electionStatus;
-    @Enumerated(STRING)
+    @Enumerated(value = STRING)
     private ElectionCategory electionCategory;
     @OneToOne
     private ElectionResult electionResult;

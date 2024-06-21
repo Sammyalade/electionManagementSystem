@@ -18,3 +18,21 @@ INSERT INTO candidate(id, first_name, last_name, party_affiliation, biography, p
 
 
 
+truncate table nomination_form cascade;
+INSERT INTO nomination_form(id, status, position_contested, date_submitted, date_approved, election_category)
+VALUES
+    (200, 'SUBMITTED', 'president', '2024-06-04T15:03:03.792009700', '2024-09-04T15:04:03.792009700', 'NATIONAL'),
+    (201, 'SUBMITTED', 'governor', '2024-06-04T15:03:03.792009700', '2024-09-04T15:04:03.792009700', 'STATE'),
+    (202, 'APPROVED', 'president', '2024-06-04T15:03:03.792009700', '2024-09-04T15:04:03.792009700', 'LOCAL_GOVERNMENT'),
+    (203, 'APPROVED', 'governor', '2024-06-04T15:03:03.792009700', '2024-09-04T15:04:03.792009700', 'LOCAL_GOVERNMENT');
+
+
+
+TRUNCATE TABLE election CASCADE;
+
+INSERT INTO election (id, start_time, end_time, election_status, election_category, election_result_id)
+VALUES
+    (300, '2024-06-04T15:03:03.792009700', '2024-06-04T17:03:03.792009700', 'NOT_STARTED', 'NATIONAL', NULL),
+    (301, '2024-06-04T15:03:03.792009700', '2024-06-04T17:03:03.792009700', 'CONCLUDED', 'STATE', NULL),
+    (302, '2024-06-04T15:03:03.792009700', '2024-06-04T17:03:03.792009700', 'IN_PROGRESS', 'LOCAL_GOVERNMENT', NULL),
+    (303, '2024-06-04T15:03:03.792009700', '2024-06-04T17:03:03.792009700', 'CONCLUDED', 'LOCAL_GOVERNMENT', NULL);
