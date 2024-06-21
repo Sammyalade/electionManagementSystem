@@ -17,8 +17,9 @@ import static jakarta.persistence.EnumType.STRING;
 @Table(name = "election_results")
 public class ElectionResult {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    private Long Id;
+    private Long totalNumberOfVoteCasted;
 
     @OneToOne
     private Election election;
