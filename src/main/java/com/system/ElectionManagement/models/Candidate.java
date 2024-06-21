@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Candidate {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private String firstName;
     private String lastName;
     @OneToOne

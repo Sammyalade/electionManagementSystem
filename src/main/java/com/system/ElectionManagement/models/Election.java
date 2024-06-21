@@ -15,7 +15,7 @@ import java.util.Set;
 public class Election {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime startTime;
