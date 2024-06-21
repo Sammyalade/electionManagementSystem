@@ -24,8 +24,8 @@ public class Vote {
     private Voter voter;
     @ManyToOne
     private Candidate candidate;
-    @Enumerated(EnumType.STRING)
-    private ElectionCategory election;
+    @ManyToOne
+    private Election election;
     @Setter(AccessLevel.NONE)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
