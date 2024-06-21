@@ -10,7 +10,7 @@ import lombok.Data;
 @Entity
 public class Address {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
     private String streetName;
     private String city;
