@@ -81,7 +81,7 @@ public class ElectionTest {
             electionService.rescheduleElection(request);
         });
 
-        assertEquals("Cannot reschedule an ongoing or completed election", exception.getMessage()); // Assuming you handle this case
+        assertEquals("Cannot reschedule an ongoing or completed election", exception.getMessage()); 
     }
     @Test
     public void testRescheduleElection_InvalidElectionId() {
