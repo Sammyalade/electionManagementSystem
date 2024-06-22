@@ -7,4 +7,6 @@ import com.system.ElectionManagement.models.Election;
 public interface ElectionService {
       ElectionResponse scheduleElection (ElectionRequest electionRequest);
       Election findElectionByCandidateId(Long candidateId);
+
+      Election addElection(Election election);
 }

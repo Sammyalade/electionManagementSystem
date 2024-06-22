@@ -57,5 +57,15 @@ public class CandidateServiceImpl implements CandidateService {
         }
     }
 
+    @Override
+    public Candidate addCandidate(Candidate candidate) {
+        return candidateRepo.save(candidate);
+    }
+
+    @Override
+    public Candidate findCandidateById(Long id) {
+        return candidateRepo.findCandidateById(id);
+    }
+
 
 }

@@ -60,6 +60,11 @@ public class ElectionServiceImpl implements ElectionService {
                   return null;
     }
 
+    @Override
+    public Election addElection(Election election) {
+     return electionRepository.save(election);
+    }
+
 
     private boolean isValidTimeOfElection(LocalDateTime timeStarted,LocalDateTime timeEnded){
         return !timeStarted.isBefore(LocalDateTime.now())
@@ -68,4 +73,7 @@ public class ElectionServiceImpl implements ElectionService {
                 && !timeEnded.isBefore(LocalDateTime.now());
 
     }
+
+
+
 }

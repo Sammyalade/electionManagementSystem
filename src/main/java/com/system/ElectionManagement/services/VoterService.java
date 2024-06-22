@@ -9,5 +9,4 @@ import com.system.ElectionManagement.models.Voter;
 public interface VoterService {
     VoterResponse registerVoter(VoterRequest voterRequest);
 
-    VoteResponse castBallot (VoteRequest voteRequest);
 }
