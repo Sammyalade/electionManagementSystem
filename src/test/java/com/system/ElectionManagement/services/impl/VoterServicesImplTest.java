@@ -24,17 +24,7 @@ class VoterServicesImplTest {
 
     @Test
     void registerVoter() {
-        Address address = new Address();
-        address.setId(1L);
-        ContactInformation contactInformation = ContactInformation.builder()
-                .id(1L)
-                .phoneNumber("1234567890")
-                .email("test@example.com")
-                .address(address)
-                .stateOfOrigin("state")
-                .localGovernment("local_government")
-                .countryOfOrigin("country")
-                .build();
+        ContactInformation contactInformation = getContactInformation();
         VoterRequest request = VoterRequest.builder()
                 .firstName("firstName")
                 .lastName("lastName")
@@ -48,6 +38,23 @@ class VoterServicesImplTest {
         assertThat(voterResponse).isNotNull();
         assertThat(voterResponse.getFirstName()).isEqualTo("firstName");
         assertThat(voterResponse.getContactInformation().getPhoneNumber()).isEqualTo("1234567890");
+    }
+
+    private static ContactInformation getContactInformation() {
+        Address address = new Address();
+        address.setId(1L);
+        address.setCity("lagos");
+        address.setZipCode("11111");
+        address.setPostalCode("22222");
+        return ContactInformation.builder()
+                .id(1L)
+                .phoneNumber("1234567890")
+                .email("test@example.com")
+                .address(address)
+                .stateOfOrigin("state")
+                .localGovernment("local_government")
+                .countryOfOrigin("country")
+                .build();
     }
 
     @Test
