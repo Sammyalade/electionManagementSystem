@@ -31,6 +31,7 @@ public class VoteServiceImpl implements VoteService {
            var voter = voterRepository.findVoterById(voteRequest.getVoterId());
            var candidate = candidateService.findCandidateById(voteRequest.getCandidateId());
            if(voter ==null ||candidate == null)throw new RuntimeException("something went wrong");
-           Vote vote  
+//           Vote vote
+        return null;
     }
 }

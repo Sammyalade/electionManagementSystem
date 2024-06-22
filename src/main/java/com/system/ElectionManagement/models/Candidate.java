@@ -19,8 +19,8 @@ public class Candidate {
     @Id
     @GeneratedValue
     private Long id;
-    private String firstName;
-    private String lastName;
+    private String username;
+    private String password;
     @OneToOne
     private ContactInformation contactInformation;
     private String partyAffiliation;
