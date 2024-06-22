@@ -31,8 +31,6 @@ public class Candidate {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dateOfBirth;
-    @ManyToOne
-    private Election election;
     @OneToMany
     @JoinTable(
             name = "candidate_votes",
@@ -40,4 +38,9 @@ public class Candidate {
             inverseJoinColumns = @JoinColumn(name = "voter_id")
     )
     private Set<Vote> votes;
+
+    @Transient
+    public int getNumberOfVotes(){
+        return votes.size();
+    }
 }

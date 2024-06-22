@@ -13,10 +13,11 @@ import java.time.LocalDate;
 public class Voter {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String username;
+    private String password;
     @OneToOne
     private ContactInformation contactInformation;
     @JsonSerialize(using = LocalDateSerializer.class)

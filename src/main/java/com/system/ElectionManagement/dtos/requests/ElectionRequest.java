@@ -15,6 +15,5 @@ public class ElectionRequest {
     private String endTime;
     private ElectionCategory electionCategory;
     private Set<Long> candidateId;
-
     private String electionTitle;
 }

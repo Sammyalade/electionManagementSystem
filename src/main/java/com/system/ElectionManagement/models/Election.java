@@ -6,6 +6,8 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -34,11 +36,30 @@ public class Election {
     @OneToOne
     private ElectionResult electionResult;
     private String electionTitle;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "registered_candidates",
             joinColumns = @JoinColumn(name = "election_id"),
             inverseJoinColumns = @JoinColumn(name = "candidate_id")
     )
+
+
     private Set<Candidate> candidates;
+
+    @Transient
+    public int getTotalVote(){
+        return candidates.stream()
+        .mapToInt(Candidate::getNumberOfVotes).sum();
+    }
+
+    @Transient
+    public  Candidate winner (){
+        int largest = candidates.stream().findFirst().get().getNumberOfVotes();
+        for(Candidate candidate : candidates){
+            if(candidate.getNumberOfVotes() >largest){
+                return candidate;
+            }
+        }
+        return null;
+    }
 }
