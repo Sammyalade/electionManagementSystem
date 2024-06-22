@@ -2,6 +2,7 @@ package com.system.ElectionManagement.config;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,6 +18,12 @@ public class Config {
                 "resource_type","auto"));
     @Bean
     public ModelMapper modelMapper(){
+        return new ModelMapper();
+    }
+
+
+    @Bean
+    public ModelMapper modelMapper( ) {
         return new ModelMapper();
     }
 }

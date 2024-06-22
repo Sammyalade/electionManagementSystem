@@ -1,15 +1,12 @@
 package com.system.ElectionManagement.services;
 
-import com.system.ElectionManagement.dtos.requests.*;
-import com.system.ElectionManagement.dtos.responses.*;
+import com.system.ElectionManagement.dtos.requests.VoteRequest;
+import com.system.ElectionManagement.dtos.requests.VoterRequest;
+import com.system.ElectionManagement.dtos.responses.VoteResponse;
+import com.system.ElectionManagement.dtos.responses.VoterResponse;
+import com.system.ElectionManagement.models.Voter;
 
 public interface VoterService {
-    SignUpResponse signUp(SignUpRequest signUpRequest);
-    LogInResponse logIn(LogInRequest logInRequest);
-    UpdateInformationResponse updateVoterInfo(UpdateInformationRequest updateInformationRequest);
-    LogOutResponse logOut(LogOutRequest logOutRequest);
-
-    ViewVoterInformationResponse viewVoterInformation(ViewVoterInformationRequest viewVoterInformation);
-
+    VoterResponse registerVoter(VoterRequest voterRequest);
 
 }
