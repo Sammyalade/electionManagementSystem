@@ -1,6 +1,8 @@
 package com.system.ElectionManagement.services;
 
+import com.system.ElectionManagement.dtos.requests.ElectionRequest;
 import com.system.ElectionManagement.dtos.requests.RescheduleElectionRequest;
+import com.system.ElectionManagement.dtos.responses.ElectionResponse;
 import com.system.ElectionManagement.dtos.responses.RescheduleElectionResponse;
 import com.system.ElectionManagement.exceptions.CantRescheduleElectionException;
 import com.system.ElectionManagement.exceptions.ElectionNotFoundException;
@@ -47,5 +49,10 @@ public class ElectionServiceImpl implements ElectionService {
         response.setRescheduledElectionId(String.valueOf(updatedElection.getId()));
         response.setRescheduledElectionDate(updatedElection.getStartTime());
         return response;
+    }
+
+    @Override
+    public ElectionResponse scheduleElection(ElectionRequest electionRequest) {
+        return null;
     }
 }

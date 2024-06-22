@@ -1,9 +1,6 @@
 package com.system.ElectionManagement.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -11,7 +8,7 @@ import lombok.Data;
 public class ContactInformation {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private String phoneNumber;
     private String email;
     @OneToOne

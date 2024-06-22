@@ -1,34 +1,46 @@
 package com.system.ElectionManagement.models;
-
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Set;
 
-@Data
+@Setter
+@Getter
 @Entity
+@Table(name = "candidates")
 public class Candidate {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private String firstName;
     private String lastName;
     @OneToOne
     private ContactInformation contactInformation;
     private String partyAffiliation;
     private String biography;
-    @OneToOne
-    private ElectionResult result;
+    private String nominationFormUrl;
+    private String financialDisclosureUrl;
     private String positionContested;
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime dateOfBirth;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate dateOfBirth;
+    @OneToMany
+    @JoinTable(
+            name = "candidate_votes",
+            joinColumns = @JoinColumn(name = "canditate_id"),
+            inverseJoinColumns = @JoinColumn(name = "voter_id")
+    )
+    private Set<Vote> votes;
 
+    @Transient
+    public int getNumberOfVotes(){
+        return votes.size();
+    }
 }

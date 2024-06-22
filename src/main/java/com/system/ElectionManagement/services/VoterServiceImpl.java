@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 
 public class VoterServiceImpl implements VoterService{
     private final VoterRepository voterRepository;
-    private final VoteRepository voteRepository;
     private final CandidateRepository candidateRepository;
     private final ModelMapper modelMapper;
     @Autowired
@@ -47,25 +46,6 @@ public class VoterServiceImpl implements VoterService{
         var response = modelMapper.map(logInRequest,LogInResponse.class);
         response.setMessage("Voter successfully signed");
         return response;
-    }
-
-    @Override
-    public CastBallotResponse castBallot(CastBallotRequest castBallotRequest) {
-        Vote vote = new Vote();
-        if(!(voterRepository.existsById(castBallotRequest.getVoterId()) || candidateRepository.existsById(castBallotRequest.getVoterId())))
-            throw new RuntimeException("cannot cast ballot");
-
-        vote.setId(castBallotRequest.getVoterId());
-        vote.setCandidate(castBallotRequest.getCandidate());
-        vote.setTimeVoted(castBallotRequest.getTimeOfRequest());
-        vote.setElection(castBallotRequest.getElection());
-        voteRepository.save(vote);
-        var votes = voteRepository.findVotesByCandidateId(castBallotRequest.getCandidate());
-        CastBallotResponse castBallotResponse = new CastBallotResponse();
-        castBallotResponse.setMessage("Ballot successfully casted to " + castBallotRequest.getCandidate());
-        castBallotResponse.setNumberOfVote(votes.size());
-
-        return castBallotResponse;
     }
 
 
