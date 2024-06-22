@@ -1,5 +1,6 @@
 package com.system.ElectionManagement.models;
 
 public enum EligibilityStatus {
-    ELIGIBLE, NOT_ELIGIBLE
+    ELIGIBLE,
+    NOT_ELIGIBLE
 }

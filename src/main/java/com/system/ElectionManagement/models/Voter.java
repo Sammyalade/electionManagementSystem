@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -21,6 +20,7 @@ public class Voter {
     private String lastName;
     private String username;
     private String password;
+    private boolean LoggedIn;
     @OneToOne
     private ContactInformation contactInformation;
     @JsonSerialize(using = LocalDateTimeSerializer.class)

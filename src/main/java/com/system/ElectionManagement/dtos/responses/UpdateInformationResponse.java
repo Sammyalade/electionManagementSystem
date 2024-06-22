@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 public class UpdateInformationResponse {
     private String message;
-    private Long id;
+    private String username;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime timeUpdated;

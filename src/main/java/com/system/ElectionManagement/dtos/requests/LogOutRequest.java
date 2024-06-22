@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LogOutRequest {
-    private Long id;
+    private String username;
 }

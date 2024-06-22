@@ -12,8 +12,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class ViewVoterInformationResponse {
-    private String firstName;
-    private String lastName;
     private String message;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)

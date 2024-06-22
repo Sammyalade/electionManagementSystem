@@ -12,7 +12,7 @@ import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -29,7 +29,7 @@ public class SignUpRequest {
     private ContactInformation contactInformation;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime dateOfBirth;
+    private DateTimeFormatter dateOfBirth;
     private EligibilityStatus eligibilityStatus;
 }
 
