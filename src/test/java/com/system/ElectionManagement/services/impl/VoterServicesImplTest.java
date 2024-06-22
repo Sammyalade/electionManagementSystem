@@ -74,6 +74,7 @@ class VoterServicesImplTest {
                 .lastName("InitialLastName")
                 .username("initialuser")
                 .password("initialpassword")
+                .contactInformation(initialContactInformation)
                 .dateOfBirth(LocalDate.parse("2024-01-03"))
                 .build();
         assertThatThrownBy(() -> voterServices.registerVoter(voterRequest))
