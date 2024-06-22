@@ -18,33 +18,28 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Set;
 
+import static jakarta.persistence.EnumType.STRING;
+
 @Data
 @Entity
+@Table(name="elections")
 public class Election {
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    private LocalDate startDate;
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    private LocalDate endDate;
-    @JsonSerialize(using= LocalTimeSerializer.class)
-    @JsonDeserialize(using = LocalTimeDeserializer.class)
-    private LocalTime startTime;
-    @JsonSerialize(using= LocalTimeSerializer.class)
-    @JsonDeserialize(using = LocalTimeDeserializer.class)
-    private LocalTime endTime;
+    private LocalDateTime startDate;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime endDate;
+    @Enumerated(value = STRING)
     private ElectionStatus electionStatus;
+    @Enumerated(value = STRING)
     private ElectionCategory electionCategory;
     @OneToOne
     private ElectionResult electionResult;
     @ManyToMany
-    @JoinTable(
-            name = "voter_election",
-            joinColumns = @JoinColumn(name = "election_id"),
-            inverseJoinColumns = @JoinColumn(name = "voter_id")
-    )
-    private Set<Voter> voters;
+    @JoinTable(name = "cadidate_election", joinColumns = @JoinColumn(name = "election_id"), inverseJoinColumns = @JoinColumn(name = "candidates_id"))
+    private Set<Candidate> candidates;
 }

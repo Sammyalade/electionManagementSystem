@@ -1,9 +1,6 @@
 package com.electionManagementSystem.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -11,9 +8,10 @@ import lombok.Data;
 public class SystemAdministrator {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private String firstName;
     private String lastName;
+    @Enumerated(value = EnumType.STRING)
     private AdminPrivilege adminPrivilege;
     private String username;
     private String password;

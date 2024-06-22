@@ -15,7 +15,7 @@ import java.util.Set;
 public class Voter {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private String firstName;
     private String lastName;
     @OneToOne
@@ -23,7 +23,8 @@ public class Voter {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime dateOfBirth;
+    @Enumerated(value = EnumType.STRING)
     private EligibilityStatus eligibilityStatus;
-    @ManyToMany(mappedBy = "voters")
+    @ManyToMany
     private Set<Election> elections;
 }
