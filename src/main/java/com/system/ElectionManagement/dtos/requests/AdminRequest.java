@@ -1,4 +1,4 @@
-package com.electionManagementSystem.dtos.requests;
+package com.system.ElectionManagement.dtos.requests;
 
 
 import lombok.Getter;
