@@ -29,6 +29,8 @@ public class VoterServicesImpl implements VoterService {
 
     @Override
     public VoterResponse registerVoter(VoterRequest voterRequest) {
+        if(voterRepository.findVoterByUsernameIgnoreCase(voterRequest.getUsername())!=null)throw
+        new RuntimeException("something went wrong ");
         if(Period.between(voterRequest.getDateOfBirth(), now()).getYears() < 18)
             throw  new IllegalArgumentException("you are not eligible to vote");
        Voter voterToBeRegistered= Voter.builder()

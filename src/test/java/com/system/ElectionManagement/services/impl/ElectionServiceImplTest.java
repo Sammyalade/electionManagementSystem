@@ -2,9 +2,6 @@ package com.system.ElectionManagement.services.impl;
 
 import com.system.ElectionManagement.dtos.requests.ElectionRequest;
 import com.system.ElectionManagement.models.Candidate;
-import com.system.ElectionManagement.models.Election;
-import com.system.ElectionManagement.models.ElectionCategory;
-import com.system.ElectionManagement.models.ElectionStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
