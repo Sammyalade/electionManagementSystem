@@ -25,8 +25,6 @@ public class Candidate {
     private String partyAffiliation;
     private String biography;
     @OneToOne
-    private NominationForm nominationForm;
-    @OneToOne
     private ElectionResult result;
     private String positionContested;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
