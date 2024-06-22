@@ -1,7 +1,10 @@
 package com.system.ElectionManagement.services.impl;
 
+import com.system.ElectionManagement.dtos.requests.UpdateRequest;
 import com.system.ElectionManagement.dtos.requests.VoterRequest;
+import com.system.ElectionManagement.dtos.responses.UpdateResponse;
 import com.system.ElectionManagement.dtos.responses.VoterResponse;
+import com.system.ElectionManagement.exceptions.VoterNotFoundException;
 import com.system.ElectionManagement.models.Voter;
 import com.system.ElectionManagement.repositories.ContactInformationRepository;
 import com.system.ElectionManagement.repositories.VoterRepository;
@@ -39,5 +42,24 @@ public class VoterServicesImpl implements VoterService {
         voterToBeRegistered =voterRepository.save(voterToBeRegistered);
         return modelMapper.map(voterToBeRegistered, VoterResponse.class);
     }
+
+    @Override
+    public UpdateResponse updateVoterInfo(UpdateRequest updateRequest) {
+        var voter = voterRepository.findVoterByUsername(updateRequest.getUsername());
+        if(voter == null) throw new VoterNotFoundException("Voter not found");
+        voter = Voter.builder()
+                .dateOfBirth(updateRequest.getDateOfBirth())
+                .lastName(updateRequest.getLastName())
+                .firstName(updateRequest.getFirstName())
+                .username(updateRequest.getUsername())
+                .password(updateRequest.getPassword())
+                .eligibilityStatus(updateRequest.getEligibilityStatus())
+                .contactInformation(updateRequest.getContactInformation())
+                .build();
+        contactInformationRepository.save(voter.getContactInformation());
+        voter = voterRepository.save(voter);
+        return modelMapper.map(voter, UpdateResponse.class);
+    }
+
 
 }

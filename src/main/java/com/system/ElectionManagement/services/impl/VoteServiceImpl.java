@@ -17,7 +17,7 @@ import static java.time.LocalDateTime.now;
 @RequiredArgsConstructor
 public class VoteServiceImpl implements VoteService {
 
-    private  final CandidateServiceImpl candidateService;
+    private final CandidateServiceImpl candidateService;
     private final ElectionServiceImpl electionService;
     private final VoterRepository voterRepository;
     private final VoteRepository voteRepository;
