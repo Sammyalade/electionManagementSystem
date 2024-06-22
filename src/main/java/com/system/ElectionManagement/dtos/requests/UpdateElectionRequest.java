@@ -1,2 +1,5 @@
-package com.electionManagementSystem.dtos.requests;public class UpdateElectionRequest {
+package com.electionManagementSystem.dtos.requests;
+public class UpdateElectionRequest {
+
+    //TODO BIOKE
 }
