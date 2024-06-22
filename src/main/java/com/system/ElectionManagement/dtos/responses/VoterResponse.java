@@ -23,5 +23,4 @@ public class VoterResponse {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dateOfBirth;
     private EligibilityStatus eligibilityStatus;
-
 }

@@ -5,7 +5,9 @@ import com.system.ElectionManagement.dtos.requests.VoterRequest;
 import com.system.ElectionManagement.dtos.responses.UpdateResponse;
 import com.system.ElectionManagement.dtos.responses.VoterResponse;
 import com.system.ElectionManagement.exceptions.VoterNotFoundException;
+import com.system.ElectionManagement.models.ContactInformation;
 import com.system.ElectionManagement.models.Voter;
+import com.system.ElectionManagement.repositories.AddressRepository;
 import com.system.ElectionManagement.repositories.ContactInformationRepository;
 import com.system.ElectionManagement.repositories.VoterRepository;
 import com.system.ElectionManagement.services.VoterService;
@@ -23,7 +25,7 @@ public class VoterServicesImpl implements VoterService {
     private final VoterRepository voterRepository;
     private final ModelMapper modelMapper;
     private final ContactInformationRepository contactInformationRepository;
-
+    private final AddressRepository addressRepository;
 
     @Override
     public VoterResponse registerVoter(VoterRequest voterRequest) {
@@ -38,6 +40,7 @@ public class VoterServicesImpl implements VoterService {
                 .eligibilityStatus(voterRequest.getEligibilityStatus())
                 .contactInformation(voterRequest.getContactInformation())
                 .build();
+       addressRepository.save(voterToBeRegistered.getContactInformation().getAddress());
         contactInformationRepository.save(voterToBeRegistered.getContactInformation());
         voterToBeRegistered =voterRepository.save(voterToBeRegistered);
         return modelMapper.map(voterToBeRegistered, VoterResponse.class);
@@ -45,21 +48,19 @@ public class VoterServicesImpl implements VoterService {
 
     @Override
     public UpdateResponse updateVoterInfo(UpdateRequest updateRequest) {
-        var voter = voterRepository.findVoterByUsername(updateRequest.getUsername());
-        if(voter == null) throw new VoterNotFoundException("Voter not found");
+        var voter = voterRepository.findVoterById(updateRequest.getId());
+        if (voter == null) {
+            throw new VoterNotFoundException("Voter not found");
+        }
         voter = Voter.builder()
-                .dateOfBirth(updateRequest.getDateOfBirth())
+         .dateOfBirth(updateRequest.getDateOfBirth())
                 .lastName(updateRequest.getLastName())
                 .firstName(updateRequest.getFirstName())
                 .username(updateRequest.getUsername())
                 .password(updateRequest.getPassword())
                 .eligibilityStatus(updateRequest.getEligibilityStatus())
-                .contactInformation(updateRequest.getContactInformation())
                 .build();
-        contactInformationRepository.save(voter.getContactInformation());
         voter = voterRepository.save(voter);
         return modelMapper.map(voter, UpdateResponse.class);
     }
-
-
 }
