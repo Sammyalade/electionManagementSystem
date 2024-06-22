@@ -2,6 +2,7 @@ package com.system.ElectionManagement.config;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,14 +10,17 @@ import org.springframework.context.annotation.Configuration;
 public class Config {
 
     @Bean
-    public Cloudinary cloudinary(){
+    public Cloudinary cloudinary() {
         return new Cloudinary(ObjectUtils.asMap(
                 "cloud_name", System.getenv("API_CLOUDINARY__CLOUDNAME"),
                 "api_key", System.getenv("API_CLOUDINARY_KEY"),
                 "api_secret", System.getenv("API_CLOUDINARY_SECRET_KEY"),
-                "resource_type","auto"));
+                "resource_type", "auto"));
+    }
+
+
     @Bean
-    public ModelMapper modelMapper(){
+    public ModelMapper modelMapper( ) {
         return new ModelMapper();
     }
 }

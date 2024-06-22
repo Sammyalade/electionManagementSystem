@@ -2,6 +2,7 @@ package com.system.ElectionManagement.services.impl;
 
 import com.system.ElectionManagement.dtos.requests.ElectionRequest;
 import com.system.ElectionManagement.dtos.responses.ElectionResponse;
+import com.system.ElectionManagement.models.Candidate;
 import com.system.ElectionManagement.models.Election;
 import com.system.ElectionManagement.repositories.CandidateRepository;
 import com.system.ElectionManagement.repositories.ElectionRepository;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -49,6 +51,20 @@ public class ElectionServiceImpl implements ElectionService {
                 .build();
     }
 
+    @Override
+    public Election findElectionByCandidateId(Long candidateId) {
+                  for(Election election : electionRepository.findAll()){
+                      Set<Long> candidateIds =election.getCandidates().stream().map(Candidate::getId).collect(Collectors.toSet());
+                      if(candidateIds.contains(candidateId))return election;
+                  }
+                  return null;
+    }
+
+    @Override
+    public Election addElection(Election election) {
+     return electionRepository.save(election);
+    }
+
 
     private boolean isValidTimeOfElection(LocalDateTime timeStarted,LocalDateTime timeEnded){
         return !timeStarted.isBefore(LocalDateTime.now())
@@ -57,4 +73,7 @@ public class ElectionServiceImpl implements ElectionService {
                 && !timeEnded.isBefore(LocalDateTime.now());
 
     }
+
+
+
 }

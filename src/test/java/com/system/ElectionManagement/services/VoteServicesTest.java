@@ -7,6 +7,7 @@ import com.system.ElectionManagement.dtos.requests.GetVoteRequest;
 import com.system.ElectionManagement.dtos.responses.VoteResponse;
 import com.system.ElectionManagement.exceptions.CastVoteException;
 import com.system.ElectionManagement.repositories.CandidateRepository;
+import com.system.ElectionManagement.services.impl.VoteServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
