@@ -1,9 +1,14 @@
 package com.system.ElectionManagement.services.impl;
 
 import com.system.ElectionManagement.dtos.requests.ElectionRequest;
+import com.system.ElectionManagement.dtos.requests.RescheduleElectionRequest;
 import com.system.ElectionManagement.dtos.responses.ElectionResponse;
+import com.system.ElectionManagement.dtos.responses.RescheduleElectionResponse;
+import com.system.ElectionManagement.exceptions.CantRescheduleElectionException;
+import com.system.ElectionManagement.exceptions.ElectionNotFoundException;
 import com.system.ElectionManagement.models.Candidate;
 import com.system.ElectionManagement.models.Election;
+import com.system.ElectionManagement.models.ElectionStatus;
 import com.system.ElectionManagement.repositories.CandidateRepository;
 import com.system.ElectionManagement.repositories.ElectionRepository;
 import com.system.ElectionManagement.services.ElectionService;
@@ -65,14 +70,39 @@ public class ElectionServiceImpl implements ElectionService {
      return electionRepository.save(election);
     }
 
+    @Override
+    public RescheduleElectionResponse rescheduleElection(RescheduleElectionRequest request) {
+        RescheduleElectionResponse response = new RescheduleElectionResponse();
 
+        Long electionId = Long.parseLong(String.valueOf(request.getElectionId()));
+        Election election = electionRepository.findById(electionId)
+                .orElseThrow(() -> new ElectionNotFoundException("Election not found"));
+
+        if (election.getElectionStatus() == ElectionStatus.IN_PROGRESS || election.getElectionStatus() == ElectionStatus.CONCLUDED) {
+            throw new CantRescheduleElectionException("Cannot reschedule an ongoing or completed election");
+        }
+
+        if (request.getElectionDate() == null) {
+            throw new ElectionNotFoundException("Invalid date");
+        }
+
+        election.setStartTime(request.getElectionDate());
+        election.setElectionStatus(ElectionStatus.SCHEDULED);
+        Election updatedElection = electionRepository.save(election);
+
+        response.setMessage("Election rescheduled successfully");
+        response.setRescheduledElectionId(String.valueOf(updatedElection.getId()));
+        response.setRescheduledElectionDate(updatedElection.getStartTime());
+        return response;
+}
     private boolean isValidTimeOfElection(LocalDateTime timeStarted,LocalDateTime timeEnded){
         return !timeStarted.isBefore(LocalDateTime.now())
                 && !timeStarted.isAfter(timeEnded)
                 && !timeEnded.isBefore(timeStarted)
                 && !timeEnded.isBefore(LocalDateTime.now());
 
-    }
+
+}
 
 
 

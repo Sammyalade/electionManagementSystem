@@ -1,6 +1,8 @@
 truncate table candidates cascade;
 truncate table address cascade;
 truncate table voter cascade;
+truncate table election cascade;
+
 
 insert into voter(id, date_of_birth, eligibility_status, first_name, last_name, password, username) values
     (1,	'1/1/1990'	,'ELIGIBLE',	'InitialFirstName',	'InitialLastName',	'initialpassword',	'initialuser'	);
