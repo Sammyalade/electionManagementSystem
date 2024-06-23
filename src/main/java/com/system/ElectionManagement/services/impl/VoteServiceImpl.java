@@ -3,7 +3,9 @@ package com.system.ElectionManagement.services.impl;
 import com.system.ElectionManagement.dtos.requests.VoteRequest;
 import com.system.ElectionManagement.dtos.responses.VoteResponse;
 import com.system.ElectionManagement.models.ElectionStatus;
+import com.system.ElectionManagement.models.EligibilityStatus;
 import com.system.ElectionManagement.models.Vote;
+import com.system.ElectionManagement.models.Voter;
 import com.system.ElectionManagement.repositories.VoteRepository;
 import com.system.ElectionManagement.repositories.VoterRepository;
 import com.system.ElectionManagement.services.VoteService;
@@ -12,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import static com.system.ElectionManagement.models.ElectionStatus.IN_PROGRESS;
+import static com.system.ElectionManagement.models.EligibilityStatus.NOT_ELIGIBLE;
 import static java.time.LocalDateTime.now;
 
 @Service
@@ -33,7 +36,9 @@ public class VoteServiceImpl implements VoteService {
            var voter = voterRepository.findVoterById(voteRequest.getVoterId());
            var candidate = candidateService.findCandidateById(voteRequest.getCandidateId());
            if(voter ==null ||candidate == null)throw new RuntimeException("something went wrong");
+           if(voter.getEligibilityStatus()==NOT_ELIGIBLE)throw new RuntimeException("you already voted for a candidate");
            var vote = Vote.builder().voter(voter).candidate(candidate).timeVoted(now()).build();
+           if(voter.getEligibilityStatus()!= NOT_ELIGIBLE)voter.setEligibilityStatus(NOT_ELIGIBLE);
            vote =voteRepository.save(vote);candidate.getVotes().add(vote);candidateService.addCandidate(candidate);
            return modelMapper.map(vote,VoteResponse.class);
     }

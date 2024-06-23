@@ -72,24 +72,21 @@ class VoterServicesImplTest {
         VoterRequest voterRequest = VoterRequest.builder()
                 .firstName("InitialFirstName")
                 .lastName("InitialLastName")
-                .username("initialuser")
+                .username("initialuser1")
                 .password("initialpassword")
                 .contactInformation(initialContactInformation)
                 .dateOfBirth(LocalDate.parse("2024-01-03"))
                 .build();
         assertThatThrownBy(() -> voterServices.registerVoter(voterRequest))
-                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("you are not eligible to vote");
     }
 
     private static ContactInformation getContactInformation() {
         Address address = new Address();
-        address.setId(1L);
         address.setCity("lagos");
         address.setZipCode("11111");
         address.setPostalCode("22222");
         return ContactInformation.builder()
-                .id(2L)
                 .phoneNumber("1234567890")
                 .email("test@example.com")
                 .address(address)

@@ -32,7 +32,7 @@ public class Candidate {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dateOfBirth;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "candidate_votes",
             joinColumns = @JoinColumn(name = "canditate_id"),
