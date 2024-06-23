@@ -1,5 +1,7 @@
-package com.electionManagementSystem.dtos.requests;
+package com.system.ElectionManagement.dtos.requests;
 
+import com.system.ElectionManagement.dtos.requests.AddressRequest;
+import com.system.ElectionManagement.dtos.requests.ContactInfoRequest;
 import lombok.Getter;
 import lombok.Setter;
 
