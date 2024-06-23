@@ -5,8 +5,7 @@ import com.system.ElectionManagement.dtos.responses.ElectionResponse;
 import com.system.ElectionManagement.models.Election;
 
 public interface ElectionService {
-      ElectionResponse scheduleElection (ElectionRequest electionRequest);
-      Election findElectionByCandidateId(Long candidateId);
-
-      Election addElection(Election election);
+    ElectionResponse scheduleElection(ElectionRequest electionRequest);
+    Election findElectionByCandidateId(Long candidateId);
+    Election addElection(Election election);
 }

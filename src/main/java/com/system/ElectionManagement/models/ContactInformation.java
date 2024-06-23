@@ -1,10 +1,13 @@
 package com.system.ElectionManagement.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Data
 @Entity
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
 public class ContactInformation {
     @Id
     @GeneratedValue

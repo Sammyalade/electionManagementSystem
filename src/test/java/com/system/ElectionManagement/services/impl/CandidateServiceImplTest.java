@@ -26,7 +26,6 @@ class CandidateServiceImplTest {
     @Autowired
     private CandidateServiceImpl candidateService;
     @Test
-
     void testThatCandidateCanBeRegistered() throws IOException {
         Path path = Paths.get("C:\\Users\\DELL\\Documents\\Get-the-Most-Out-of-HttpClient.pdf");
         InputStream inputStream = Files.newInputStream(path);

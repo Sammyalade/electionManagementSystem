@@ -1,4 +1,4 @@
-package com.system.ElectionManagement.services.impl;
+package com.system.ElectionManagement.services.impl;////////package com.system.ElectionManagement.services.impl;
 
 import com.cloudinary.Cloudinary;
 import com.system.ElectionManagement.dtos.requests.CandidateRequest;
@@ -24,7 +24,6 @@ import static java.time.LocalDate.now;
 @RequiredArgsConstructor
 public class CandidateServiceImpl implements CandidateService {
 
-
     private final Cloudinary cloudinary;
     
     private final ModelMapper modelMapper;
@@ -49,6 +48,8 @@ public class CandidateServiceImpl implements CandidateService {
             candidate.setContactInformation(candidateRequest.getContactInformation());
             if(Period.between(candidate.getDateOfBirth(), now()).getYears()<18)throw new IllegalArgumentException("you are to young to vote");
             contactInformationRepository.save(candidate.getContactInformation());
+            if(candidateRepo.findCandidateByUsernameIgnoreCase(candidate.getUsername())!=null)throw
+            new RuntimeException("user already exist");
             candidate = candidateRepo.save(candidate);
             return modelMapper.map(candidate, CandidateResponse.class);
         }catch (IOException exception) {

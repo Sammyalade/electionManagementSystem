@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface CandidateRepository extends JpaRepository<Candidate, Long> {
         Candidate findCandidateById(Long id);
+
+        Candidate findCandidateByUsernameIgnoreCase(String username);
 }

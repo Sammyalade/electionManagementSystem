@@ -1,4 +1,4 @@
-package com.system.ElectionManagement.dtos.requests;
+package com.system.ElectionManagement.dtos.responses;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -6,17 +6,14 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.system.ElectionManagement.models.ContactInformation;
 import com.system.ElectionManagement.models.EligibilityStatus;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-
-
 @Setter
 @Getter
-@Builder
-public class VoterRequest {
+public class UpdateResponse {
+    private Long id;
     private String firstName;
     private String lastName;
     private String username;
@@ -26,5 +23,4 @@ public class VoterRequest {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dateOfBirth;
     private EligibilityStatus eligibilityStatus;
-
 }

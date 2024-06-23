@@ -11,20 +11,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-
-
 @Setter
 @Getter
 @Builder
-public class VoterRequest {
+public class UpdateRequest {
+    private Long id;
     private String firstName;
     private String lastName;
     private String username;
     private String password;
-    private ContactInformation contactInformation;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dateOfBirth;
     private EligibilityStatus eligibilityStatus;
-
 }
