@@ -1,14 +1,11 @@
 package com.system.ElectionManagement.services.impl;
 
 import com.system.ElectionManagement.dtos.requests.ElectionRequest;
-import com.system.ElectionManagement.dtos.requests.RescheduleElectionRequest;
+import com.system.ElectionManagement.dtos.requests.ViewElectionResultRequest;
 import com.system.ElectionManagement.dtos.responses.ElectionResponse;
-import com.system.ElectionManagement.dtos.responses.RescheduleElectionResponse;
-import com.system.ElectionManagement.exceptions.CantRescheduleElectionException;
-import com.system.ElectionManagement.exceptions.ElectionNotFoundException;
+import com.system.ElectionManagement.dtos.responses.ViewElectionResultResponse;
 import com.system.ElectionManagement.models.Candidate;
 import com.system.ElectionManagement.models.Election;
-import com.system.ElectionManagement.models.ElectionStatus;
 import com.system.ElectionManagement.repositories.CandidateRepository;
 import com.system.ElectionManagement.repositories.ElectionRepository;
 import com.system.ElectionManagement.services.ElectionService;
@@ -30,11 +27,9 @@ public class ElectionServiceImpl implements ElectionService {
     private final ElectionRepository electionRepository;
 
     private final CandidateRepository candidateRepository;
-
-    private final ModelMapper modelMapper;
     @Override
     public ElectionResponse scheduleElection(ElectionRequest electionRequest) {
-             if(isNotValidTimeOfElection(LocalDateTime.parse(electionRequest.getStartTime())
+             if(!isValidTimeOfElection(LocalDateTime.parse(electionRequest.getStartTime())
                      , LocalDateTime.parse(electionRequest.getEndTime())))
                  throw new RuntimeException("something is wrong with your timing");
         Election electionToBeScheduled = Election.builder()
@@ -73,32 +68,38 @@ public class ElectionServiceImpl implements ElectionService {
      return electionRepository.save(election);
     }
 
+
+
+
+    private boolean isValidTimeOfElection(LocalDateTime timeStarted,LocalDateTime timeEnded){
+        return !timeStarted.isBefore(LocalDateTime.now())
+                && !timeStarted.isAfter(timeEnded)
+                && !timeEnded.isBefore(timeStarted)
+                && !timeEnded.isBefore(LocalDateTime.now());
+
+    }
+
+
     @Override
-    public RescheduleElectionResponse rescheduleElection(RescheduleElectionRequest request) {
-        RescheduleElectionResponse response = new RescheduleElectionResponse();
-        Election election = electionRepository.findElectionById(request.getElectionId());
-        if(election==null)throw new ElectionNotFoundException("something is wrong");
-        if (election.getElectionStatus() == ElectionStatus.IN_PROGRESS || election.getElectionStatus() == ElectionStatus.CONCLUDED)
-            throw new CantRescheduleElectionException("Cannot reschedule an ongoing or completed election");
-        if(isNotValidTimeOfElection(LocalDateTime.parse(request.getStartTime()), LocalDateTime.parse(request.getEndTime())))
-            throw new ElectionNotFoundException("something is wrong with your head");
-        election.setElectionStatus(ElectionStatus.SCHEDULED);
-        election=modelMapper.map(request, Election.class);
-        Election updatedElection = electionRepository.save(election);
-        response.setMessage("Election rescheduled successfully");
-        response.setRescheduledElectionId(String.valueOf(updatedElection.getId()));
-        response.setRescheduledElectionDate(updatedElection.getStartTime());
-        return response;
-}
-    private boolean isNotValidTimeOfElection(LocalDateTime timeStarted, LocalDateTime timeEnded){
-        return timeStarted.isBefore(LocalDateTime.now())
-                || timeStarted.isAfter(timeEnded)
-                || timeEnded.isBefore(timeStarted)
-                || timeEnded.isBefore(LocalDateTime.now());
+    public ViewElectionResultResponse viewElectionResult(ViewElectionResultRequest viewResult) {
+        Election election = electionRepository
+                .findElectionById(viewResult.getElectionId());
+        ElectionResult electionResult = election.getElectionResult();
+        ViewElectionResultResponse resultResponse = modelMapper
+                .map(electionResult, ViewElectionResultResponse.class);
+        resultResponse.setElectionId(election.getId());
+        resultResponse.setElectionTitle(election.getElectionTitle());
+        resultResponse.setStartTime(election.getStartTime());
+        resultResponse.setEndTime(election.getEndTime());
+        resultResponse.setElectionStatus(election.getElectionStatus());
+        resultResponse.setElectionCategory(election.getElectionCategory());
+        if (electionResult.getCandidate() != null) {
+            String fullName = electionResult.getCandidate()
+                    .getFirstName() + " " + electionResult.getCandidate().getLastName();
+            resultResponse.setCandidateName(fullName);
+        }
 
-
-}
-
-
+        return resultResponse;
+    }
 
 }
