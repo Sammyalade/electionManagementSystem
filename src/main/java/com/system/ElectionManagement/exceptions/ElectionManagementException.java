@@ -1,4 +1,4 @@
-package com.electionManagementSystem.exceptions;
+package com.system.ElectionManagement.exceptions;
 
 public class ElectionManagementException extends RuntimeException{
 

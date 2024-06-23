@@ -5,6 +5,7 @@ import com.system.ElectionManagement.dtos.requests.ElectionRequest;
 import com.system.ElectionManagement.dtos.requests.UpdateRequest;
 import com.system.ElectionManagement.dtos.requests.VoterRequest;
 import com.system.ElectionManagement.dtos.responses.UpdateResponse;
+import com.system.ElectionManagement.exceptions.ElectionManagementException;
 import com.system.ElectionManagement.models.Address;
 import com.system.ElectionManagement.models.ContactInformation;
 import com.system.ElectionManagement.models.EligibilityStatus;
@@ -78,6 +79,7 @@ class VoterServicesImplTest {
                 .dateOfBirth(LocalDate.parse("2024-01-03"))
                 .build();
         assertThatThrownBy(() -> voterServices.registerVoter(voterRequest))
+                .isInstanceOf(ElectionManagementException.class)
                 .hasMessageContaining("you are not eligible to vote");
     }
 
