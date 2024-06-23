@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Period;
 
+import static com.system.ElectionManagement.models.AdminPrivilege.SYSTEM_ADMINISTRATOR;
 import static java.time.LocalDate.now;
 
 @Service
@@ -42,6 +43,9 @@ public class AdminServiceImpl implements AdminService {
             throw new AdminException("Username already exists");
         }
         SystemAdministrator adminToBeRegistered= SystemAdministrator.builder()
+                        .firstName(request.getFirstName())
+                        .lastName(request.getLastName())
+                        .adminPrivilege(SYSTEM_ADMINISTRATOR)
                         .username(request.getUsername())
                         .password(request.getPassword())
                         .build();

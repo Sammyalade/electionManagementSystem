@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 
+import static com.system.ElectionManagement.models.AdminPrivilege.SYSTEM_ADMINISTRATOR;
 import static com.system.ElectionManagement.models.EligibilityStatus.ELIGIBLE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -23,6 +24,9 @@ class AdminServiceImplTest {
     @Test
     void registerAsAdmin() {
         AdminRequest adminRequest = AdminRequest.builder()
+                .firstName("firstname")
+                .lastName("lastname")
+                .privilege(SYSTEM_ADMINISTRATOR)
                 .username("admin")
                 .password("gopass")
                 .build();
@@ -35,6 +39,9 @@ class AdminServiceImplTest {
     void registerAdminThatAlreadyExistsThrowsException() {
         registerAsAdmin();
         AdminRequest adminRequest = AdminRequest.builder()
+                .firstName("firstname")
+                .lastName("lastname")
+                .privilege(SYSTEM_ADMINISTRATOR)
                 .username("admin")
                 .password("gopass")
                 .build();
