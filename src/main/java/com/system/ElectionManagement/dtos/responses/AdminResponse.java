@@ -1,4 +1,4 @@
-package com.electionManagementSystem.dtos.responses;
+package com.system.ElectionManagement.dtos.responses;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,4 +7,6 @@ import lombok.Setter;
 @Getter
 public class AdminResponse {
     private Long id;
+    private String username;
+
 }
