@@ -60,12 +60,7 @@ public class Election {
 
     @Transient
     public  Candidate winner (){
-        int largest = candidates.stream().findFirst().get().getNumberOfVotes();
-        for(Candidate candidate : candidates){
-            if(candidate.getNumberOfVotes() >largest){
-                return candidate;
-            }
-        }
-        return null;
+        var largest = candidates.stream().mapToLong(Candidate::getNumberOfVotes).max();
+        return candidates.stream().filter(candidate -> (long) candidate.getNumberOfVotes() ==largest.getAsLong()).findFirst().get();
     }
 }

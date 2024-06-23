@@ -20,7 +20,6 @@ import java.util.Set;
 
 public class CandidateResponse {
     private Long id;
-    private String username;
     private String password;
     private ContactInformation contactInformation;
     private String partyAffiliation;
