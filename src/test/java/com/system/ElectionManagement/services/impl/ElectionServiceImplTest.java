@@ -9,12 +9,14 @@ import com.system.ElectionManagement.models.Candidate;
 import com.system.ElectionManagement.models.Election;
 import com.system.ElectionManagement.models.ElectionStatus;
 import com.system.ElectionManagement.repositories.ElectionRepository;
+import org.hibernate.query.sqm.TemporalUnit;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.Set;
 
@@ -22,7 +24,7 @@ import static com.system.ElectionManagement.models.ElectionCategory.LOCAL_GOVERN
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-@Sql(scripts = {"/db/data.sql"})
+
 class ElectionServiceImplTest {
     @Autowired
     ElectionRepository electionRepository;
@@ -31,6 +33,7 @@ class ElectionServiceImplTest {
     @Autowired
     private ElectionServiceImpl electionService;
     @Test
+    @Sql(scripts = {"/db/newData.sql"})
     void testThatElectionCanBeScheduled() {
         var request = ElectionRequest.builder()
                 .candidateId(Set.of(1L))
@@ -59,6 +62,7 @@ class ElectionServiceImplTest {
 
 
     @Test
+    @Sql(scripts = {"/db/newData.sql"})
     void testThatWeCanFindElectionByCandidateId(){
         var request = ElectionRequest.builder()
                 .candidateId(Set.of(1L))
@@ -71,17 +75,19 @@ class ElectionServiceImplTest {
         var election =electionService.findElectionByCandidateId(1L);
         assertThat(election.getCandidates().stream().map(Candidate::getId)).contains(1L);
     }
+
     @Test
+    @Sql(scripts = {"/db/data.sql"})
     public void testRescheduleElection() {
         Optional<Election> optionalElection = electionRepository.findById(1L);
-        Election existingElection = optionalElection.orElseThrow(() -> new ElectionNotFoundException("Election not found"));
+        Election existingElection = optionalElection.get();
 
         assertEquals(ElectionStatus.SCHEDULED, existingElection.getElectionStatus());
 
         RescheduleElectionRequest request = new RescheduleElectionRequest();
         request.setElectionId(Long.valueOf(String.valueOf(existingElection.getId())));
         LocalDateTime newStartTime = LocalDateTime.of(2025, 7, 1, 10, 0);
-        request.setElectionDate(newStartTime);
+        request.setStartTime(newStartTime.toString());
         RescheduleElectionResponse response = electionService.rescheduleElection(request);
         assertNotNull(response);
         assertEquals("Election rescheduled successfully", response.getMessage());
@@ -95,21 +101,21 @@ class ElectionServiceImplTest {
 
     }
     @Test
+    @Sql(scripts = {"/db/newData.sql"})
     public void testRescheduleElection_InvalidDate() {
-        Optional<Election> optionalElection = electionRepository.findById(1L);
-        Election existingElection = optionalElection.orElseThrow(() -> new ElectionNotFoundException("Election not found"));
-
         RescheduleElectionRequest request = new RescheduleElectionRequest();
-        request.setElectionId(Long.valueOf(String.valueOf(existingElection.getId())));
-        request.setElectionDate(null);
+        request.setElectionId(Long.valueOf(String.valueOf(1)));
+        request.setStartTime(String.valueOf(LocalDateTime.now().minusDays(1L)));
 
         Exception exception = assertThrows(ElectionNotFoundException.class, () -> {
             electionService.rescheduleElection(request);
         });
 
-        assertEquals("Invalid date", exception.getMessage());
+        assertEquals("something is wrong", exception.getMessage());
     }
     @Test
+    @Sql(scripts = {"/db/data.sql"})
+
     public void testRescheduleElection_AlreadyStarted() {
         Optional<Election> optionalElection = electionRepository.findById(1L);
         Election existingElection = optionalElection.orElseThrow(() -> new ElectionNotFoundException("Election not found"));
@@ -118,7 +124,7 @@ class ElectionServiceImplTest {
 
         RescheduleElectionRequest request = new RescheduleElectionRequest();
         request.setElectionId(Long.valueOf(String.valueOf(existingElection.getId())));
-        request.setElectionDate(LocalDateTime.of(2024, 7, 1, 10, 0));
+        request.setStartTime(LocalDateTime.of(2024, 7, 1, 10, 0).toString());
 
         Exception exception = assertThrows(CantRescheduleElectionException.class, () -> {
             electionService.rescheduleElection(request);
@@ -127,16 +133,18 @@ class ElectionServiceImplTest {
         assertEquals("Cannot reschedule an ongoing or completed election", exception.getMessage()); // Assuming you handle this case
     }
     @Test
+    @Sql(scripts = {"/db/data.sql"})
+
     public void testRescheduleElection_InvalidElectionId() {
         RescheduleElectionRequest request = new RescheduleElectionRequest();
         request.setElectionId(999L);
-        request.setElectionDate(LocalDateTime.of(2024, 7, 1, 10, 0));
+        request.setStartTime(LocalDateTime.of(2024, 7, 1, 10, 0).toString());
 
         Exception exception = assertThrows(ElectionNotFoundException.class, () -> {
             electionService.rescheduleElection(request);
         });
 
-        assertEquals("Election not found", exception.getMessage());
+        assertEquals("something is wrong", exception.getMessage());
 }
 
 

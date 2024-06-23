@@ -13,6 +13,7 @@ import com.system.ElectionManagement.repositories.CandidateRepository;
 import com.system.ElectionManagement.repositories.ElectionRepository;
 import com.system.ElectionManagement.services.ElectionService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,9 +30,11 @@ public class ElectionServiceImpl implements ElectionService {
     private final ElectionRepository electionRepository;
 
     private final CandidateRepository candidateRepository;
+
+    private final ModelMapper modelMapper;
     @Override
     public ElectionResponse scheduleElection(ElectionRequest electionRequest) {
-             if(!isValidTimeOfElection(LocalDateTime.parse(electionRequest.getStartTime())
+             if(isNotValidTimeOfElection(LocalDateTime.parse(electionRequest.getStartTime())
                      , LocalDateTime.parse(electionRequest.getEndTime())))
                  throw new RuntimeException("something is wrong with your timing");
         Election electionToBeScheduled = Election.builder()
@@ -73,33 +76,25 @@ public class ElectionServiceImpl implements ElectionService {
     @Override
     public RescheduleElectionResponse rescheduleElection(RescheduleElectionRequest request) {
         RescheduleElectionResponse response = new RescheduleElectionResponse();
-
-        Long electionId = Long.parseLong(String.valueOf(request.getElectionId()));
-        Election election = electionRepository.findById(electionId)
-                .orElseThrow(() -> new ElectionNotFoundException("Election not found"));
-
-        if (election.getElectionStatus() == ElectionStatus.IN_PROGRESS || election.getElectionStatus() == ElectionStatus.CONCLUDED) {
+        Election election = electionRepository.findElectionById(request.getElectionId());
+        if(election==null)throw new ElectionNotFoundException("something is wrong");
+        if (election.getElectionStatus() == ElectionStatus.IN_PROGRESS || election.getElectionStatus() == ElectionStatus.CONCLUDED)
             throw new CantRescheduleElectionException("Cannot reschedule an ongoing or completed election");
-        }
-
-        if (request.getElectionDate() == null) {
-            throw new ElectionNotFoundException("Invalid date");
-        }
-
-        election.setStartTime(request.getElectionDate());
+        if(isNotValidTimeOfElection(LocalDateTime.parse(request.getStartTime()), LocalDateTime.parse(request.getEndTime())))
+            throw new ElectionNotFoundException("something is wrong with your head");
         election.setElectionStatus(ElectionStatus.SCHEDULED);
+        election=modelMapper.map(request, Election.class);
         Election updatedElection = electionRepository.save(election);
-
         response.setMessage("Election rescheduled successfully");
         response.setRescheduledElectionId(String.valueOf(updatedElection.getId()));
         response.setRescheduledElectionDate(updatedElection.getStartTime());
         return response;
 }
-    private boolean isValidTimeOfElection(LocalDateTime timeStarted,LocalDateTime timeEnded){
-        return !timeStarted.isBefore(LocalDateTime.now())
-                && !timeStarted.isAfter(timeEnded)
-                && !timeEnded.isBefore(timeStarted)
-                && !timeEnded.isBefore(LocalDateTime.now());
+    private boolean isNotValidTimeOfElection(LocalDateTime timeStarted, LocalDateTime timeEnded){
+        return timeStarted.isBefore(LocalDateTime.now())
+                || timeStarted.isAfter(timeEnded)
+                || timeEnded.isBefore(timeStarted)
+                || timeEnded.isBefore(LocalDateTime.now());
 
 
 }
