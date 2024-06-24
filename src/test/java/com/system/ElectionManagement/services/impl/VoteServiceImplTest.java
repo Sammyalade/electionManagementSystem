@@ -25,8 +25,8 @@ private ElectionServiceImpl electionService;
         voteRequest.setCandidateId(1L);
         voteRequest.setVoterId(1L);
         voteService.castBallot(voteRequest);
-       var candidateWithVote= electionService.findElectionByCandidateId(1L);
-        assertThat(candidateWithVote.getTotalVote()).isEqualTo(1);
+       var electionWithVote= electionService.findElectionByCandidateId(1L);
+        assertThat(electionWithVote.getTotalVote()).isEqualTo(1);
     }
     @Test
     @Sql(scripts = {"/db/data.sql"})
