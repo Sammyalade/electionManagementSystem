@@ -16,8 +16,8 @@ import static org.springframework.http.HttpStatus.CREATED;
 @AllArgsConstructor
 public class AdminController {
     private final AdminService adminService;
-    @PostMapping
-    public ResponseEntity<?> addAdmin(@RequestBody AdminRequest request) {
+    @PostMapping("/add-admin")
+    public ResponseEntity<?> registerAdmin(@RequestBody AdminRequest request) {
         return ResponseEntity.status(CREATED).body(adminService.registerAsAdmin(request));
     }
     @PostMapping
