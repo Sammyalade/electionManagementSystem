@@ -2,20 +2,12 @@ package com.system.ElectionManagement.models;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Set;
 
 import static jakarta.persistence.EnumType.STRING;
@@ -50,17 +42,17 @@ public class Election {
     )
 
 
-    private Set<Candidate> candidates;
+    private Set<CandidateRequest> candidates;
 
     @Transient
     public int getTotalVote(){
         return candidates.stream()
-        .mapToInt(Candidate::getNumberOfVotes).sum();
+        .mapToInt(CandidateRequest::getNumberOfVotes).sum();
     }
 
     @Transient
-    public  Candidate winner (){
-        var largest = candidates.stream().mapToLong(Candidate::getNumberOfVotes).max();
+    public CandidateRequest winner (){
+        var largest = candidates.stream().mapToLong(CandidateRequest::getNumberOfVotes).max();
         return candidates.stream().filter(candidate -> (long) candidate.getNumberOfVotes() ==largest.getAsLong()).findFirst().get();
     }
 }

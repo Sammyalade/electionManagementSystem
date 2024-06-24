@@ -4,6 +4,7 @@ import com.system.ElectionManagement.dtos.requests.*;
 import com.system.ElectionManagement.dtos.responses.RescheduleElectionResponse;
 import com.system.ElectionManagement.dtos.responses.ViewElectionResultResponse;
 import com.system.ElectionManagement.models.*;
+import com.system.ElectionManagement.models.CandidateRequest;
 import com.system.ElectionManagement.repositories.ElectionRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -72,7 +73,7 @@ class ElectionServiceImplTest {
                 .build();
         var response = electionService.scheduleElection(request);
         var election = electionService.findElectionByCandidateId(1L);
-        assertThat(election.getCandidates().stream().map(Candidate::getId)).contains(1L);
+        assertThat(election.getCandidates().stream().map(CandidateRequest::getId)).contains(1L);
     }
 
     @Test
@@ -99,7 +100,7 @@ class ElectionServiceImplTest {
       assertThat(electionRepository.findElectionById(1L).winner().getNumberOfVotes()).isEqualTo(2);
     }
 
-    private static ElectionResult getElectionResult(Election election, Candidate candidate) {
+    private static ElectionResult getElectionResult(Election election, CandidateRequest candidate) {
         ElectionResult electionResult = new ElectionResult();
         electionResult.setElectionCategory(PRESIDENTIAL);
         electionResult.setElectionStatus(ElectionStatus.CONCLUDED);
@@ -110,8 +111,8 @@ class ElectionServiceImplTest {
         return electionResult;
     }
 
-    private static Candidate getCandidate() {
-        Candidate candidate = new Candidate();
+    private static CandidateRequest getCandidate() {
+        CandidateRequest candidate = new CandidateRequest();
         candidate.setFirstName("Bola");
         candidate.setLastName("Tinubu");
         return candidate;

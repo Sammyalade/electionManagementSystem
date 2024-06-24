@@ -1,6 +1,6 @@
 package com.system.ElectionManagement.dtos.responses;
 
-import com.system.ElectionManagement.models.Candidate;
+import com.system.ElectionManagement.models.CandidateRequest;
 import com.system.ElectionManagement.models.ElectionCategory;
 import com.system.ElectionManagement.models.ElectionStatus;
 import lombok.*;
@@ -18,7 +18,7 @@ public class ElectionResponse {
     private String endTime;
     private ElectionStatus electionStatus;
     private ElectionCategory electionCategory;
-    private Set<Candidate> candidates;
+    private Set<CandidateRequest> candidates;
 
     private String electionTitle;
 }

@@ -1,9 +1,8 @@
 package com.system.ElectionManagement.services.impl;////////package com.system.ElectionManagement.services.impl;
 
 import com.cloudinary.Cloudinary;
-import com.system.ElectionManagement.dtos.requests.CandidateRequest;
 import com.system.ElectionManagement.dtos.responses.CandidateResponse;
-import com.system.ElectionManagement.models.Candidate;
+import com.system.ElectionManagement.models.CandidateRequest;
 import com.system.ElectionManagement.repositories.CandidateRepository;
 import com.system.ElectionManagement.repositories.ContactInformationRepository;
 import com.system.ElectionManagement.repositories.ElectionRepository;
@@ -11,7 +10,6 @@ import com.system.ElectionManagement.services.CandidateService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import java.io.IOException;
 import java.time.Period;
@@ -36,13 +34,13 @@ public class CandidateServiceImpl implements CandidateService {
 
 
     @Override
-    public CandidateResponse registerCandidate(CandidateRequest candidateRequest) {
+    public CandidateResponse registerCandidate(com.system.ElectionManagement.dtos.requests.CandidateRequest candidateRequest) {
         try {
             Map<?,?> nominationFormResponse = cloudinary.uploader().upload(candidateRequest.getNominationForm().getBytes(), new HashMap());
             Map<?,?> financialFormResponse = cloudinary.uploader().upload(candidateRequest.getFinancialDisclosureForm().getBytes(),new HashMap());
             String nominationFormUrl = nominationFormResponse.get("url").toString();
             String financialFormUrl = financialFormResponse.get("url").toString();
-            var candidate=modelMapper.map(candidateRequest, Candidate.class);
+            var candidate=modelMapper.map(candidateRequest, CandidateRequest.class);
             candidate.setFinancialDisclosureUrl(nominationFormUrl);
             candidate.setNominationFormUrl(financialFormUrl);
             candidate.setContactInformation(candidateRequest.getContactInformation());
@@ -59,12 +57,12 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     @Override
-    public Candidate addCandidate(Candidate candidate) {
+    public CandidateRequest addCandidate(CandidateRequest candidate) {
         return candidateRepo.save(candidate);
     }
 
     @Override
-    public Candidate findCandidateById(Long id) {
+    public CandidateRequest findCandidateById(Long id) {
         return candidateRepo.findCandidateById(id);
     }
 

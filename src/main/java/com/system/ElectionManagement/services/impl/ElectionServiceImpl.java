@@ -8,7 +8,7 @@ import com.system.ElectionManagement.dtos.responses.ElectionResponse;
 import com.system.ElectionManagement.dtos.responses.RescheduleElectionResponse;
 import com.system.ElectionManagement.dtos.responses.ViewElectionResultResponse;
 import com.system.ElectionManagement.exceptions.ElectionNotFoundException;
-import com.system.ElectionManagement.models.Candidate;
+import com.system.ElectionManagement.models.CandidateRequest;
 import com.system.ElectionManagement.models.Election;
 import com.system.ElectionManagement.models.ElectionResult;
 import com.system.ElectionManagement.repositories.CandidateRepository;
@@ -66,7 +66,7 @@ public class ElectionServiceImpl implements ElectionService {
     @Override
     public Election findElectionByCandidateId(Long candidateId) {
                   for(Election election : electionRepository.findAll()){
-                      Set<Long> candidateIds =election.getCandidates().stream().map(Candidate::getId).collect(Collectors.toSet());
+                      Set<Long> candidateIds =election.getCandidates().stream().map(CandidateRequest::getId).collect(Collectors.toSet());
                       if(candidateIds.contains(candidateId))return election;
                   }
                   return null;

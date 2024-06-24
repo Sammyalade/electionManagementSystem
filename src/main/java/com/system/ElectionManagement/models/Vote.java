@@ -24,7 +24,7 @@ public class Vote {
     @OneToOne
     private Voter voter;
     @ManyToOne
-    private Candidate candidate;
+    private CandidateRequest candidate;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDateTime timeVoted;

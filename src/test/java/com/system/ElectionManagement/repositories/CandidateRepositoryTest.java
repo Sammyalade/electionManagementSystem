@@ -1,7 +1,6 @@
 package com.system.ElectionManagement.repositories;
 
-import com.system.ElectionManagement.models.Candidate;
-import com.system.ElectionManagement.models.Election;
+import com.system.ElectionManagement.models.CandidateRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +15,7 @@ public class CandidateRepositoryTest {
 
     @Test
     void testAddVote() {
-        Candidate candidate = new Candidate();
+        CandidateRequest candidate = new CandidateRequest();
         candidateRepository.save(candidate);
         assertEquals(1L, candidateRepository.count());
     }

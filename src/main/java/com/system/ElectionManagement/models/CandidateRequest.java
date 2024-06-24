@@ -16,7 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "candidates")
-public class Candidate {
+public class CandidateRequest {
     @Id
     @GeneratedValue
     private Long id;
