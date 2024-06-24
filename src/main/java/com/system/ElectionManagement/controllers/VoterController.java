@@ -18,7 +18,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @AllArgsConstructor
 public class VoterController {
     private final VoterService voterService;
-    @PatchMapping
+    @PatchMapping("/update/voter")
     public ResponseEntity<?> updateVoter(@RequestBody UpdateRequest voter) {
         return ResponseEntity.status(CREATED).body(voterService.updateVoterInfo(voter));
     }

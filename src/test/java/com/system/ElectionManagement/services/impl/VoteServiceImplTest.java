@@ -29,7 +29,6 @@ private ElectionServiceImpl electionService;
         assertThat(candidateWithVote.getTotalVote()).isEqualTo(1);
     }
     @Test
-    @Async
     @Sql(scripts = {"/db/data.sql"})
     void testThatVoterCanNotVoteForTheSameCandidateTwice() {
         VoteRequest voteRequest =  new VoteRequest();

@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class ElectionController {
     private final ElectionService electionService;
 
-    @GetMapping
-    public ResponseEntity<?> findElection(@RequestParam long candidateId) {
+    @GetMapping("/get/election/{candidateId}")
+    public ResponseEntity<?> findElection(@PathVariable("candidateId") long candidateId) {
         return ResponseEntity.ok(electionService.findElectionByCandidateId(candidateId));
     }
 
-    @GetMapping
+    @PatchMapping ("/view/election/result")
     public ResponseEntity<?> getResult(@RequestBody ViewElectionResultRequest request) {
         return ResponseEntity.ok(electionService.viewElectionResult(request));
     }

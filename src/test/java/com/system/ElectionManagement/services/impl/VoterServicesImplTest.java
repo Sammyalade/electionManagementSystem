@@ -79,7 +79,7 @@ class VoterServicesImplTest {
                 .dateOfBirth(LocalDate.parse("2024-01-03"))
                 .build();
         assertThatThrownBy(() -> voterServices.registerVoter(voterRequest))
-                .isInstanceOf(ElectionManagementException.class)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("you are not eligible to vote");
     }
 

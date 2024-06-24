@@ -20,19 +20,19 @@ public class AdminController {
     public ResponseEntity<?> registerAdmin(@RequestBody AdminRequest request) {
         return ResponseEntity.status(CREATED).body(adminService.registerAsAdmin(request));
     }
-    @PostMapping
+    @PostMapping("/register/candidate")
     public ResponseEntity<?> registerCandidate(@RequestBody CandidateRequest request) {
         return ResponseEntity.status(CREATED).body(adminService.registerCandidate(request));
     }
-    @PostMapping
+    @PostMapping("/register/voter")
     public ResponseEntity<?> registerVoter(@RequestBody VoterRequest request) {
         return ResponseEntity.status(CREATED).body(adminService.registerVoter(request));
     }
-    @PostMapping
+    @PostMapping("/schedule/election")
     public ResponseEntity<?> scheduleElection(@RequestBody ElectionRequest request) {
         return ResponseEntity.status(CREATED).body(adminService.scheduleElection(request));
     }
-    @PostMapping
+    @PostMapping("/reschedule/election")
     public ResponseEntity<?> reScheduleCandidate(@RequestBody RescheduleElectionRequest request) {
         return ResponseEntity.status(CREATED).body(adminService.rescheduleElection(request));
     }

@@ -16,7 +16,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @AllArgsConstructor
 public class VoteController {
     private final VoteService voteService;
-    @PostMapping
+    @PostMapping("/cast-vote")
     public ResponseEntity<?> castVote(@RequestBody VoteRequest request) {
         return ResponseEntity.status(CREATED).body(voteService.castBallot(request));
     }

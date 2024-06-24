@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Period;
+import java.util.List;
 
+import static com.system.ElectionManagement.models.AdminPrivilege.ELECTION_MANAGER;
 import static com.system.ElectionManagement.models.AdminPrivilege.SYSTEM_ADMINISTRATOR;
 import static java.time.LocalDate.now;
 
@@ -39,16 +41,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public AdminResponse registerAsAdmin(AdminRequest request) {
         SystemAdministrator check = systemAdministratorRepository.findByUsername(request.getUsername());
-        if (check != null) {
-            throw new AdminException("Username already exists");
-        }
+        if (check != null) throw new AdminException("Username already exists");
         SystemAdministrator adminToBeRegistered= SystemAdministrator.builder()
-                        .firstName(request.getFirstName())
-                        .lastName(request.getLastName())
-                        .adminPrivilege(SYSTEM_ADMINISTRATOR)
+                        .firstName(request.getFirstName()).lastName(request.getLastName())
+                        .adminPrivileges(List.of(SYSTEM_ADMINISTRATOR, ELECTION_MANAGER))
                         .username(request.getUsername())
-                        .password(request.getPassword())
-                        .build();
+                        .password(request.getPassword()).build();
         systemAdministratorRepository.save(adminToBeRegistered);
         return modelMapper.map(adminToBeRegistered, AdminResponse.class);
     }

@@ -1,13 +1,12 @@
 package com.system.ElectionManagement.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -22,7 +21,7 @@ public class SystemAdministrator {
     private Long id;
     private String firstName;
     private String lastName;
-    private AdminPrivilege adminPrivilege;
+    private List<AdminPrivilege> adminPrivileges;
     private String username;
     private String password;
     @OneToOne

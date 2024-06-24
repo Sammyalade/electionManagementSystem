@@ -26,7 +26,6 @@ class AdminServiceImplTest {
         AdminRequest adminRequest = AdminRequest.builder()
                 .firstName("firstname")
                 .lastName("lastname")
-                .privilege(SYSTEM_ADMINISTRATOR)
                 .username("admin")
                 .password("gopass")
                 .build();
@@ -37,14 +36,13 @@ class AdminServiceImplTest {
     }
     @Test
     void registerAdminThatAlreadyExistsThrowsException() {
-        registerAsAdmin();
         AdminRequest adminRequest = AdminRequest.builder()
                 .firstName("firstname")
                 .lastName("lastname")
-                .privilege(SYSTEM_ADMINISTRATOR)
-                .username("admin")
+                .username("admin1")
                 .password("gopass")
                 .build();
+        adminService.registerAsAdmin(adminRequest);
         assertThatThrownBy(() -> adminService.registerAsAdmin(adminRequest))
                 .isInstanceOf(AdminException.class)
                 .hasMessageContaining("Username already exists");
