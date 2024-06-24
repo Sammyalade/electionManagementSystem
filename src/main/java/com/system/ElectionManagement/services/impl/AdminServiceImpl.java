@@ -47,7 +47,7 @@ public class AdminServiceImpl implements AdminService {
                         .adminPrivileges(List.of(SYSTEM_ADMINISTRATOR, ELECTION_MANAGER))
                         .username(request.getUsername())
                         .password(request.getPassword()).build();
-        systemAdministratorRepository.save(adminToBeRegistered);
+        adminToBeRegistered= systemAdministratorRepository.save(adminToBeRegistered);
         return modelMapper.map(adminToBeRegistered, AdminResponse.class);
     }
 
