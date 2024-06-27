@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
+@ToString
 public class ContactInformation {
     @Id
     @GeneratedValue
